@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @RestControllerAdvice
-public class ResponseInterceptor implements ResponseBodyAdvice {
+public class ResponseInterceptor implements ResponseBodyAdvice<ApiResponse<?>> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
@@ -18,9 +18,15 @@ public class ResponseInterceptor implements ResponseBodyAdvice {
     }
 
     @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
-                                  Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        HttpStatus status = ((ApiResponse<?>) body).httpStatus();
+    public ApiResponse<?> beforeBodyWrite(
+            ApiResponse body,
+            MethodParameter returnType,
+            MediaType selectedContentType,
+            Class selectedConverterType,
+            ServerHttpRequest request,
+            ServerHttpResponse response
+    ) {
+        HttpStatus status = body.httpStatus();
         response.setStatusCode(status);
 
         return body;

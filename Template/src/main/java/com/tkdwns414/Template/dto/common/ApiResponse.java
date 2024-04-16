@@ -2,7 +2,6 @@ package com.tkdwns414.Template.dto.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tkdwns414.Template.dto.type.ErrorCode;
-import com.tkdwns414.Template.exception.CustomException;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
