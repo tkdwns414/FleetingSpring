@@ -1,6 +1,7 @@
 package com.tkdwns414.Template.dto.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tkdwns414.Template.dto.type.ErrorCode;
 import com.tkdwns414.Template.exception.CustomException;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public record ApiResponse<T>(
         return new ApiResponse<>(HttpStatus.CREATED, true, data, null);
     }
 
-    public static <T> ApiResponse<T> fail(final CustomException e) {
-        return new ApiResponse<>(e.getErrorCode().getHttpStatus(), false, null, ExceptionDto.of(e.getErrorCode()));
+    public static <T> ApiResponse<T> fail(final ErrorCode c) {
+        return new ApiResponse<>(c.getHttpStatus(), false, null, ExceptionDto.of(c));
     }
 }
