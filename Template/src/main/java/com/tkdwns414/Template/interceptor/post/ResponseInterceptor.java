@@ -14,16 +14,14 @@ public class ResponseInterceptor implements ResponseBodyAdvice {
 
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
-        return true;
+        return returnType.getParameterType() == ApiResponse.class;
     }
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
                                   Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        if (returnType.getParameterType() == ApiResponse.class) {
-            HttpStatus status = ((ApiResponse<?>) body).httpStatus();
-            response.setStatusCode(status);
-        }
+        HttpStatus status = ((ApiResponse<?>) body).httpStatus();
+        response.setStatusCode(status);
 
         return body;
     }
