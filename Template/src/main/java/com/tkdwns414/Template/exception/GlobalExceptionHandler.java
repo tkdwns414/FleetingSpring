@@ -18,7 +18,6 @@ public class GlobalExceptionHandler {
         return ApiResponse.fail(ErrorCode.NOT_FOUND_END_POINT);
     }
 
-
     // 커스텀 예외
     @ExceptionHandler(value = {CustomException.class})
     public ApiResponse<?> handleCustomException(CustomException e) {

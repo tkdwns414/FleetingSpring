@@ -1,4 +1,4 @@
-package com.tkdwns414.Template.interceptor.post;
+package com.tkdwns414.Template.advice;
 
 import com.tkdwns414.Template.dto.common.ApiResponse;
 import org.springframework.core.MethodParameter;
@@ -10,21 +10,26 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @RestControllerAdvice
-public class ResponseInterceptor implements ResponseBodyAdvice {
+public class ResponseStatusSetterAdvice implements ResponseBodyAdvice<ApiResponse<?>> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
-        return true;
+        return returnType.getParameterType() == ApiResponse.class;
     }
 
     @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
-                                  Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        if (returnType.getParameterType() == ApiResponse.class) {
-            HttpStatus status = ((ApiResponse<?>) body).httpStatus();
-            response.setStatusCode(status);
-        }
+    public ApiResponse<?> beforeBodyWrite(
+            ApiResponse body,
+            MethodParameter returnType,
+            MediaType selectedContentType,
+            Class selectedConverterType,
+            ServerHttpRequest request,
+            ServerHttpResponse response
+    ) {
+        HttpStatus status = body.httpStatus();
+        response.setStatusCode(status);
 
         return body;
     }
 }
+
