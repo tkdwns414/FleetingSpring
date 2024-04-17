@@ -1,4 +1,4 @@
-package com.tkdwns414.Template.interceptor.post;
+package com.tkdwns414.Template.advice;
 
 import com.tkdwns414.Template.dto.common.ApiResponse;
 import org.springframework.core.MethodParameter;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @RestControllerAdvice
-public class ResponseInterceptor implements ResponseBodyAdvice<ApiResponse<?>> {
+public class ResponseStatusSetterAdvice implements ResponseBodyAdvice<ApiResponse<?>> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
@@ -32,3 +32,4 @@ public class ResponseInterceptor implements ResponseBodyAdvice<ApiResponse<?>> {
         return body;
     }
 }
+
